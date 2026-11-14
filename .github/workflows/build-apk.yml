@@ -11,6 +11,7 @@ jobs:
           distribution: temurin
           java-version: '17'
       - uses: android-actions/setup-android@v3
+      - run: yes | sdkmanager --licenses || true
       - run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
       - run: unzip -q guowang-exam-source.zip -d source && cd source/Guowang_Exam_Android_Project && gradle :app:assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
