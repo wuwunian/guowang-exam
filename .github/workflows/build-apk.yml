@@ -10,13 +10,13 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Configure Android SDK
+      - name: Build APK
         run: |
-          export ANDROID_SDK_ROOT=/usr/local/lib/android/sdk
-          export PATH="$ANDROID_SDK_ROOT/cmdline-tools/16.0/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH"
-          yes | sdkmanager --licenses || true
-          sdkmanager "platforms;android-34" "build-tools;34.0.0"
-      - run: unzip -q guowang-exam-source.zip -d source && cd source/Guowang_Exam_Android_Project && gradle :app:assembleDebug --stacktrace
+          unzip -q guowang-exam-source.zip -d source
+          cd source/Guowang_Exam_Android_Project
+          export ANDROID_HOME=/usr/local/lib/android/sdk
+          export ANDROID_SDK_ROOT=$ANDROID_HOME
+          gradle :app:assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
         with:
           name: guowang-exam-debug-apk
